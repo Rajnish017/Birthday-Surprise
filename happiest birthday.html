@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-pink: #ffb7c5;
+            --soft-lavender: #e6e6fa;
+            --gold: #d4af37;
+            --deep-red: #e63946;
+            --text-color: #4a4a4a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
+            overflow-x: hidden;
+            color: var(--text-color);
+            min-height: 100vh;
+        }
+
+        /* --- Magical Background Elements --- */
+        .stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.8) 0%, transparent 100%);
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: twinkle var(--duration) infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* --- Layout Structures --- */
+        .stage {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+        }
+
+        .stage.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        /* --- Typography & UI --- */
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            color: #d81b60;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .main-photo-container {
+            width: 300px;
+            height: 400px;
+            border: 8px solid white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-bottom: 30px;
+            transform: rotate(-2deg);
+            transition: transform 0.3s;
+        }
+
+        .main-photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        button {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            font-weight: 600;
+        }
+
+        .btn-red { background-color: var(--deep-red); color: white; }
+        .btn-gold { background-color: var(--gold); color: white; }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        /* --- Stage 2: Message --- */
+        .message-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 30px;
+            max-width: 600px;
+            border: 2px solid var(--primary-pink);
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        /* --- Stage 3: Cinematic Reveal --- */
+        .slideshow-container {
+            width: 90%;
+            max-width: 450px;
+            height: 550px;
+            border: 10px solid white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            background: #fff;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        #slideshow-frame {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .fade-out { opacity: 0; }
+
+        @media (max-width: 600px) {
+            .slideshow-container { height: 400px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="stars-container" id="stars"></div>
+
+    <section id="stage1" class="stage active">
+        <h1>Happiest Birthday to the Most beautiful girl of this world</h1>
+        <div class="main-photo-container">
+            <img src="image1.jpg" alt="Birthday Girl">
+        </div>
+        <button class="btn-red" onclick="goToStage(2)">there is more</button>
+    </section>
+
+    <section id="stage2" class="stage">
+        <div class="message-card">
+            <p>
+                Happy Birthday! <br><br>
+                You deserve all the stars in the sky and all the flowers in the world. 
+                Thank you for being the incredible person you are! <br><br>
+                (Insert your own long message here)
+            </p>
+        </div>
+        <button class="btn-gold" onclick="startReveal()">click to see the most beautiful girl</button>
+    </section>
+
+    <section id="stage3" class="stage">
+        <h2 style="font-family: 'Dancing Script'; font-size: 2.5rem; color: #d81b60; margin-bottom: 20px;">
+            Every picture tells a story...
+        </h2>
+        
+        <div class="slideshow-container">
+            <img id="slideshow-frame" src="image2.jpg" alt="Birthday Girl">
+        </div>
+
+        <div id="final-message" style="display:none; margin-top: 10px;">
+            <p style="font-weight: 600; color: #d81b60; font-size: 1.2rem;">You are simply wonderful!</p>
+            <button class="btn-red" onclick="location.reload()" style="margin-top: 15px; padding: 10px 20px; font-size: 1rem;">Watch Again</button>
+        </div>
+    </section>
+
+    <script>
+        // Star Background Logic
+        const starContainer = document.getElementById('stars');
+        for (let i = 0; i < 100; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            const size = Math.random() * 3 + 'px';
+            star.style.width = size;
+            star.style.height = size;
+            star.style.top = Math.random() * 100 + '%';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.setProperty('--duration', Math.random() * 3 + 2 + 's');
+            starContainer.appendChild(star);
+        }
+
+        // Navigation Logic
+        function goToStage(stageNum) {
+            document.querySelectorAll('.stage').forEach(s => s.classList.remove('active'));
+            setTimeout(() => {
+                document.getElementById('stage' + stageNum).classList.add('active');
+            }, 100);
+        }
+
+        // Stage 3 Slideshow Logic
+        function startReveal() {
+            goToStage(3);
+            
+            // List of images to cycle through
+            const images = ["image2.jpg", "image3.jpg", "image4.jpg", "image5.jpg", "image6.jpg", "image7.jpg"];
+            const frame = document.getElementById('slideshow-frame');
+            let currentIndex = 0;
+
+            const interval = setInterval(() => {
+                // 1. Fade current image out
+                frame.classList.add('fade-out');
+
+                setTimeout(() => {
+                    currentIndex++;
+                    
+                    if (currentIndex < images.length) {
+                        // 2. Change image source
+                        frame.src = images[currentIndex];
+                        // 3. Fade new image in
+                        frame.classList.remove('fade-out');
+                    } else {
+                        // End of slideshow
+                        clearInterval(interval);
+                        document.getElementById('final-message').style.display = 'block';
+                    }
+                }, 1000); // Duration of fade-out before swap
+
+            }, 3500); // Swap image every 3.5 seconds
+        }
+    </script>
+</body>
+</html>
